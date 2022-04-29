@@ -45,13 +45,14 @@ liliaIMG = pygame.image.load('lilia png.png')
 ingyIMG = pygame.image.load('ingrid walking png.png')
 
 DEFAULT_IMAGE_SIZE = (70, 130)
-ashlynIMG = (pygame.transform.scale(ashlynIMG, DEFAULT_IMAGE_SIZE))
+DEFAULT_IMAGE_SIZE_FOR_INGY_ASH = (60, 120)
+ashlynIMG = (pygame.transform.scale(ashlynIMG, DEFAULT_IMAGE_SIZE_FOR_INGY_ASH))
 leftashlynIMG = pygame.transform.flip(ashlynIMG, True, False)
 alexisIMG = (pygame.transform.scale(alexisIMG, DEFAULT_IMAGE_SIZE))
 leftalexisIMG = pygame.transform.flip(alexisIMG, True, False)
 liliaIMG = (pygame.transform.scale(liliaIMG, DEFAULT_IMAGE_SIZE))
 leftliliaIMG = pygame.transform.flip(liliaIMG, True, False)
-ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE))
+ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE_FOR_INGY_ASH))
 leftingyIMG = pygame.transform.flip(ingyIMG, True, False)
 
 # 1 is ashlyn
@@ -72,12 +73,12 @@ for i in range(num_of_players):
     else:
         player.append(liliaIMG)
         leftplayer.append(leftliliaIMG)
-playerX.append(random.randint(0, 730))
-playerY.append(random.randint(25, 150))
-playerX_change.append(0.2)
-playerY_change.append(30)
-playerFacingRight.append(True)
-personCounter = (personCounter + 1)
+    playerX.append(random.randint(0, 730))
+    playerY.append(random.randint(25, 150))
+    playerX_change.append(0.2)
+    playerY_change.append(30)
+    playerFacingRight.append(True)
+    personCounter = (personCounter + 1)
 
 # finger bullet
 bullet = pygame.image.load('fingers.png')
