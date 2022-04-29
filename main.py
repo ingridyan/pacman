@@ -29,6 +29,7 @@ landryX_change = 0
 landryY_change = 0
 landryFacingRight = True
 
+
 # player
 player = []
 playerX = []
@@ -39,20 +40,32 @@ playerFacingRight = []
 leftplayer = []
 num_of_players = 4
 
+DEFAULT_IMAGE_SIZE_LILIA = (80, 140)
+DEFAULT_IMAGE_SIZE_ALEX = (90, 153)
+DEFAULT_IMAGE_SIZE_FOR_INGY = (65, 125)
+DEFAULT_IMAGE_SIZE_FOR_ASH = (70, 130)
+
 ashlynIMG = pygame.image.load('ashlyn walking png.png')
 alexisIMG = pygame.image.load('alexis walking png.png')
 liliaIMG = pygame.image.load('lilia png.png')
 ingyIMG = pygame.image.load('ingrid walking png.png')
 
-DEFAULT_IMAGE_SIZE = (70, 130)
-DEFAULT_IMAGE_SIZE_FOR_INGY_ASH = (60, 120)
-ashlynIMG = (pygame.transform.scale(ashlynIMG, DEFAULT_IMAGE_SIZE_FOR_INGY_ASH))
+ashlynStand = pygame.image.load('ashlynstanding png.png')
+ashlynStand = (pygame.transform.scale(ashlynStand, DEFAULT_IMAGE_SIZE_FOR_ASH))
+alexisStand = pygame.image.load('alexisstanding png.png')
+alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE_ALEX))
+liliaStand = pygame.image.load('liliastanding png.png')
+liliaStand = (pygame.transform.scale(liliaStand, DEFAULT_IMAGE_SIZE))
+ingyStand = pygame.image.load('ingridstanding png.png')
+ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE_FOR_INGY))
+
+ashlynIMG = (pygame.transform.scale(ashlynIMG, DEFAULT_IMAGE_SIZE_FOR_ASH))
 leftashlynIMG = pygame.transform.flip(ashlynIMG, True, False)
-alexisIMG = (pygame.transform.scale(alexisIMG, DEFAULT_IMAGE_SIZE))
+alexisIMG = (pygame.transform.scale(alexisIMG, DEFAULT_IMAGE_SIZE_ALEX))
 leftalexisIMG = pygame.transform.flip(alexisIMG, True, False)
-liliaIMG = (pygame.transform.scale(liliaIMG, DEFAULT_IMAGE_SIZE))
+liliaIMG = (pygame.transform.scale(liliaIMG, DEFAULT_IMAGE_SIZE_LILIA))
 leftliliaIMG = pygame.transform.flip(liliaIMG, True, False)
-ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE_FOR_INGY_ASH))
+ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE_FOR_INGY))
 leftingyIMG = pygame.transform.flip(ingyIMG, True, False)
 
 # 1 is ashlyn
@@ -228,6 +241,8 @@ ingridcast = (pygame.transform.scale(ingridcast, DEFAULT_IMAGE_SIZE))
 
 castfont = pygame.font.Font('freesansbold.ttf', 15)
 # meet the cast page
+
+
 while castPage:
     screen.fill((202, 228, 241))
     screen.blit(alexiscast, (200, 75))
@@ -235,8 +250,22 @@ while castPage:
     screen.blit(ashlyncast, (500, 75))
     screen.blit(liliacast, (350, 75))
     screen.blit(ingridcast, (650, 75))
+
+    DEFAULT_IMAGE_SIZE = (70, 140)
+    landryStand = pygame.image.load('landrystanding png.png')
+    landryStand = (pygame.transform.scale(landryStand, DEFAULT_IMAGE_SIZE))
+    alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE))
+    DEFAULT_IMAGE_SIZE = (75, 145)
+    ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE))
+    screen.blit(landryStand, (50, 400))
+    screen.blit(ashlynStand, (558, 450))
+    screen.blit(alexisStand, (200, 450))
+    screen.blit(liliaStand, (370, 300))
+    screen.blit(ingyStand, (700, 450))
+
     meetthecast = font.render("Meet the Cast", True, (0, 0, 0))
     screen.blit(meetthecast, (50, 0))
+
     # bios
 
     liliabio = castfont.render("Lilia:", True, (0, 0, 0))
@@ -258,9 +287,9 @@ while castPage:
     screen.blit(ashlynbio, (490, 375))
     ashlynbio = castfont.render("That's my bio.", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 400))
-    ashlynbio = castfont.render("and everyone adores her,", True, (0, 0, 0))
+    ashlynbio = castfont.render("Everyone adores,", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 425))
-    ashlynbio = castfont.render("*of course*", True, (0, 0, 0))
+    ashlynbio = castfont.render("her *of course*", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 450))
     ashlynbio = castfont.render("Add that.", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 475))
@@ -273,15 +302,15 @@ while castPage:
     screen.blit(alexisbio, (195, 300))
     alexisbio = castfont.render("you'll ever meet.", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 325))
-    alexisbio = castfont.render("has never broken a bone", True, (0, 0, 0))
+    alexisbio = castfont.render("has never broken a ", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 350))
-    alexisbio = castfont.render("recieved a B in a class,", True, (0, 0, 0))
+    alexisbio = castfont.render("bone, or recieved a ", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 375))
-    alexisbio = castfont.render("However,", True, (0, 0, 0))
+    alexisbio = castfont.render("B in a class.", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 400))
-    alexisbio = castfont.render("was once sneezed on.", True, (0, 0, 0))
+    alexisbio = castfont.render("However, was once", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 425))
-    alexisbio = castfont.render("also the funniest.", True, (0, 0, 0))
+    alexisbio = castfont.render(" sneezed on.", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 450))
 
     landrybio = castfont.render("Landry:", True, (0, 0, 0))
