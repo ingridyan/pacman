@@ -29,46 +29,69 @@ landryX_change = 0
 landryY_change = 0
 landryFacingRight = True
 
-# player ashlyn
-ashlyn = []
-ashlynX = []
-ashlynY = []
-ashlynX_change = []
-ashlynY_change = []
-ashlynFacingRight = []
-leftashlyn = []
-num_of_ashlyns = 3
+
+# player
+player = []
+playerX = []
+playerY = []
+playerX_change = []
+playerY_change = []
+playerFacingRight = []
+leftplayer = []
+num_of_players = 4
+
+DEFAULT_IMAGE_SIZE_LILIA = (80, 140)
+DEFAULT_IMAGE_SIZE_ALEX = (90, 153)
+DEFAULT_IMAGE_SIZE_FOR_INGY = (65, 125)
+DEFAULT_IMAGE_SIZE_FOR_ASH = (70, 130)
 
 ashlynIMG = pygame.image.load('ashlyn walking png.png')
 alexisIMG = pygame.image.load('alexis walking png.png')
 liliaIMG = pygame.image.load('lilia png.png')
 ingyIMG = pygame.image.load('ingrid walking png.png')
 
-DEFAULT_IMAGE_SIZE = (70, 130)
-ashlynIMG = (pygame.transform.scale(ashlynIMG, DEFAULT_IMAGE_SIZE))
+ashlynStand = pygame.image.load('ashlynstanding png.png')
+ashlynStand = (pygame.transform.scale(ashlynStand, DEFAULT_IMAGE_SIZE_FOR_ASH))
+alexisStand = pygame.image.load('alexisstanding png.png')
+alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE_ALEX))
+liliaStand = pygame.image.load('liliastanding png.png')
+liliaStand = (pygame.transform.scale(liliaStand, DEFAULT_IMAGE_SIZE))
+ingyStand = pygame.image.load('ingridstanding png.png')
+ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE_FOR_INGY))
+
+ashlynIMG = (pygame.transform.scale(ashlynIMG, DEFAULT_IMAGE_SIZE_FOR_ASH))
 leftashlynIMG = pygame.transform.flip(ashlynIMG, True, False)
-alexisIMG = (pygame.transform.scale(alexisIMG, DEFAULT_IMAGE_SIZE))
+alexisIMG = (pygame.transform.scale(alexisIMG, DEFAULT_IMAGE_SIZE_ALEX))
 leftalexisIMG = pygame.transform.flip(alexisIMG, True, False)
-liliaIMG = (pygame.transform.scale(liliaIMG, DEFAULT_IMAGE_SIZE))
+liliaIMG = (pygame.transform.scale(liliaIMG, DEFAULT_IMAGE_SIZE_LILIA))
 leftliliaIMG = pygame.transform.flip(liliaIMG, True, False)
-ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE))
+ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE_FOR_INGY))
 leftingyIMG = pygame.transform.flip(ingyIMG, True, False)
+score = 0
+# 1 is ashlyn
+# 2 is alexis
+# 3 is ingy
+# 4 is lilia
 
-personCounter = 0
-for i in range(num_of_ashlyns):
-
-    if personCounter == 0:
-        ashlyn.append(liliaIMG)
-        leftashlyn.append(leftashlynIMG)
+personCounter = 1
+for i in range(num_of_players):
     if personCounter == 1:
-        ashlyn.append(ingyIMG)
-        leftashlyn.append(leftashlynIMG)
-
-    ashlynX.append(random.randint(0, 730))
-    ashlynY.append(random.randint(25, 150))
-    ashlynX_change.append(0.2)
-    ashlynY_change.append(30)
-    ashlynFacingRight.append(True)
+        player.append(ashlynIMG)
+        leftplayer.append(leftashlynIMG)
+    elif personCounter == 2:
+        player.append(alexisIMG)
+        leftplayer.append(leftalexisIMG)
+    elif personCounter == 3:
+        player.append(ingyIMG)
+        leftplayer.append(leftingyIMG)
+    else:
+        player.append(liliaIMG)
+        leftplayer.append(leftliliaIMG)
+    playerX.append(random.randint(0, 730))
+    playerY.append(random.randint(25, 150))
+    playerX_change.append(0.2)
+    playerY_change.append(30)
+    playerFacingRight.append(True)
     personCounter = (personCounter + 1)
 
 # finger bullet
@@ -84,7 +107,7 @@ bulletY_change = 0.5
 bullet_state = "ready"
 
 # score and title
-score = 0
+
 font = pygame.font.Font('freesansbold.ttf', 32)
 textX = 10
 textY = 10
@@ -114,12 +137,12 @@ def landryF(x, y):
         screen.blit(leftlandry, (x, y))
 
 
-def ashlynF(x, y, i):
+def playerF(x, y, i):
     # blit means to draw
-    if ashlynFacingRight[i] == True:
-        screen.blit(ashlyn[i], (x, y))
+    if playerFacingRight[i] == True:
+        screen.blit(player[i], (x, y))
     else:
-        screen.blit(leftashlyn[i], (x, y))
+        screen.blit(leftplayer[i], (x, y))
 
 
 def fire_bullet(x, y):
@@ -131,8 +154,8 @@ def fire_bullet(x, y):
         screen.blit(bullet, (x - 50, y))
 
 
-def isCollision(ashlynX, ashlynY, bulletX, bulletY):
-    distance = math.sqrt((math.pow(ashlynX - bulletX, 2)) + (math.pow(ashlynY - bulletY, 2)))
+def isCollision(playerX, playerY, bulletX, bulletY):
+    distance = math.sqrt((math.pow(playerX - bulletX, 2)) + (math.pow(playerY - bulletY, 2)))
     if distance < 70:
         return True
     else:
@@ -179,6 +202,7 @@ start_button_for_cast = Button(300, 450, start_img, 0.6)
 castPage = False
 running = False
 titlePageRun = True
+endPage = False
 while titlePageRun:
     screen.blit(background, (0, 0))
     show_titlepage(textX, textY)
@@ -219,6 +243,8 @@ ingridcast = (pygame.transform.scale(ingridcast, DEFAULT_IMAGE_SIZE))
 
 castfont = pygame.font.Font('freesansbold.ttf', 15)
 # meet the cast page
+
+
 while castPage:
     screen.fill((202, 228, 241))
     screen.blit(alexiscast, (200, 75))
@@ -226,8 +252,22 @@ while castPage:
     screen.blit(ashlyncast, (500, 75))
     screen.blit(liliacast, (350, 75))
     screen.blit(ingridcast, (650, 75))
+
+    DEFAULT_IMAGE_SIZE = (70, 140)
+    landryStand = pygame.image.load('landrystanding png.png')
+    landryStand = (pygame.transform.scale(landryStand, DEFAULT_IMAGE_SIZE))
+    alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE))
+    DEFAULT_IMAGE_SIZE = (75, 145)
+    ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE))
+    screen.blit(landryStand, (50, 400))
+    screen.blit(ashlynStand, (558, 450))
+    screen.blit(alexisStand, (200, 450))
+    screen.blit(liliaStand, (370, 300))
+    screen.blit(ingyStand, (700, 450))
+
     meetthecast = font.render("Meet the Cast", True, (0, 0, 0))
     screen.blit(meetthecast, (50, 0))
+
     # bios
 
     liliabio = castfont.render("Lilia:", True, (0, 0, 0))
@@ -249,9 +289,9 @@ while castPage:
     screen.blit(ashlynbio, (490, 375))
     ashlynbio = castfont.render("That's my bio.", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 400))
-    ashlynbio = castfont.render("and everyone adores her,", True, (0, 0, 0))
+    ashlynbio = castfont.render("Everyone adores,", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 425))
-    ashlynbio = castfont.render("*of course*", True, (0, 0, 0))
+    ashlynbio = castfont.render("her *of course*", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 450))
     ashlynbio = castfont.render("Add that.", True, (0, 0, 0))
     screen.blit(ashlynbio, (490, 475))
@@ -264,15 +304,15 @@ while castPage:
     screen.blit(alexisbio, (195, 300))
     alexisbio = castfont.render("you'll ever meet.", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 325))
-    alexisbio = castfont.render("has never broken a bone", True, (0, 0, 0))
+    alexisbio = castfont.render("has never broken a ", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 350))
-    alexisbio = castfont.render("recieved a B in a class,", True, (0, 0, 0))
+    alexisbio = castfont.render("bone, or recieved a ", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 375))
-    alexisbio = castfont.render("However,", True, (0, 0, 0))
+    alexisbio = castfont.render("B in a class.", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 400))
-    alexisbio = castfont.render("was once sneezed on.", True, (0, 0, 0))
+    alexisbio = castfont.render("However, was once", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 425))
-    alexisbio = castfont.render("also the funniest.", True, (0, 0, 0))
+    alexisbio = castfont.render(" sneezed on.", True, (0, 0, 0))
     screen.blit(alexisbio, (195, 450))
 
     landrybio = castfont.render("Landry:", True, (0, 0, 0))
@@ -312,31 +352,37 @@ while castPage:
             castPage = False
     pygame.display.update()
 
+while endPage:
+    screen.fill((133, 186, 204))
+    screen.blit(background, (0, 0))
+    pygame.display.update()
 # game loop, make sure window doesn't close down
 while running:
     screen.fill((133, 186, 204))
     screen.blit(background, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            endPage = False
         # if keystroke is pressed check whether its right or left
+        if score == 10:
+            running = False
         if event.type == pygame.KEYDOWN:
             # moving left and right
             if event.key == pygame.K_LEFT:
                 if landryFacingRight == True:
                     landryFacingRight = False
-                landryX_change = -0.3
+                landryX_change = -0.4
             if event.key == pygame.K_RIGHT:
                 if landryFacingRight == False:
                     # landry = pygame.transform.flip(landry, True, False)
                     landryFacingRight = True
-                landryX_change = 0.3
+                landryX_change = 0.4
 
             # moving up and down
             if event.key == pygame.K_UP:
-                landryY_change = -0.3
+                landryY_change = -0.4
             if event.key == pygame.K_DOWN:
-                landryY_change = 0.3
+                landryY_change = 0.4
             # space bar is pressed
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
@@ -356,29 +402,33 @@ while running:
     elif landryX >= 730:
         landryX = 730
     landryY += landryY_change
+    if landryY <= 350:
+        landryY = 350
+    elif landryY >= 470:
+        landryY = 470
 
-    # ashlyn movement
-    for i in range(num_of_ashlyns):
-        ashlynX[i] += ashlynX_change[i]
-        if ashlynX[i] <= 0:
-            ashlynX_change[i] = 0.2
-            ashlynFacingRight[i] = True
-            ashlynY[i] += ashlynY_change[i]
-        elif ashlynX[i] >= 730:
-            ashlynX_change[i] = -0.2
-            ashlynFacingRight[i] = False
-            ashlynY[i] += ashlynY_change[i]
+    # player movement
+    for i in range(num_of_players):
+        playerX[i] += playerX_change[i]
+        if playerX[i] <= 0:
+            playerX_change[i] = 0.2
+            playerFacingRight[i] = True
+            playerY[i] += playerY_change[i]
+        elif playerX[i] >= 730:
+            playerX_change[i] = -0.2
+            playerFacingRight[i] = False
+            playerY[i] += playerY_change[i]
 
         # collision
-        collision = isCollision(ashlynX[i], ashlynY[i], bulletX, bulletY)
+        collision = isCollision(playerX[i], playerY[i], bulletX, bulletY)
         if collision:
             bulletY = 300
             bullet_state = "ready"
             score += 1
-            ashlynX[i] = random.randint(0, 730)
-            ashlynY[i] = random.randint(25, 150)
+            playerX[i] = random.randint(0, 730)
+            playerY[i] = random.randint(25, 150)
 
-        ashlynF(ashlynX[i], ashlynY[i], i)
+        playerF(playerX[i], playerY[i], i)
     # bullet movement
     if bulletY <= 0:
         bulletY = landryY
