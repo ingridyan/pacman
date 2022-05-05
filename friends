@@ -352,20 +352,17 @@ while castPage:
             castPage = False
     pygame.display.update()
 
-while endPage:
-    screen.fill((133, 186, 204))
-    screen.blit(background, (0, 0))
-    pygame.display.update()
 # game loop, make sure window doesn't close down
 while running:
     screen.fill((133, 186, 204))
     screen.blit(background, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            endPage = False
-        # if keystroke is pressed check whether its right or left
-        if score == 10:
             running = False
+        # if keystroke is pressed check whether its right or left
+        if score == 2:
+            running = False
+            endPage = True
         if event.type == pygame.KEYDOWN:
             # moving left and right
             if event.key == pygame.K_LEFT:
@@ -394,6 +391,12 @@ while running:
                 landryX_change = 0
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 landryY_change = 0
+
+    while endPage:
+        screen.blit(background, (0, 0))
+
+
+        pygame.display.update()
 
     # landry movement
     landryX += landryX_change
