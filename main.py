@@ -67,11 +67,12 @@ liliaIMG = (pygame.transform.scale(liliaIMG, DEFAULT_IMAGE_SIZE_LILIA))
 leftliliaIMG = pygame.transform.flip(liliaIMG, True, False)
 ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE_FOR_INGY))
 leftingyIMG = pygame.transform.flip(ingyIMG, True, False)
-
+score = 0
 # 1 is ashlyn
 # 2 is alexis
 # 3 is ingy
 # 4 is lilia
+
 personCounter = 1
 for i in range(num_of_players):
     if personCounter == 1:
@@ -106,7 +107,7 @@ bulletY_change = 0.5
 bullet_state = "ready"
 
 # score and title
-score = 0
+
 font = pygame.font.Font('freesansbold.ttf', 32)
 textX = 10
 textY = 10
@@ -201,6 +202,7 @@ start_button_for_cast = Button(300, 450, start_img, 0.6)
 castPage = False
 running = False
 titlePageRun = True
+endPage = False
 while titlePageRun:
     screen.blit(background, (0, 0))
     show_titlepage(textX, textY)
@@ -358,23 +360,26 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         # if keystroke is pressed check whether its right or left
+        if score == 2:
+            running = False
+            endPage = True
         if event.type == pygame.KEYDOWN:
             # moving left and right
             if event.key == pygame.K_LEFT:
                 if landryFacingRight == True:
                     landryFacingRight = False
-                landryX_change = -0.3
+                landryX_change = -0.4
             if event.key == pygame.K_RIGHT:
                 if landryFacingRight == False:
                     # landry = pygame.transform.flip(landry, True, False)
                     landryFacingRight = True
-                landryX_change = 0.3
+                landryX_change = 0.4
 
             # moving up and down
             if event.key == pygame.K_UP:
-                landryY_change = -0.3
+                landryY_change = -0.4
             if event.key == pygame.K_DOWN:
-                landryY_change = 0.3
+                landryY_change = 0.4
             # space bar is pressed
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
@@ -387,6 +392,26 @@ while running:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 landryY_change = 0
 
+    castfont = pygame.font.Font('freesansbold.ttf', 35)
+    while endPage:
+        screen.blit(background, (0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                endPage = False
+        ingridbio = castfont.render("Thanks for playing!", True, (0, 0, 0))
+        screen.blit(ingridbio, (100,50))
+        if start_button.draw() == True:
+            print("start clicked")
+            endPage = False
+            running = True
+            titlePageRun = False
+        if cast_button.draw() == True:
+            print("cast clicked")
+            endPage = False
+            castPage = True
+            titlePageRun = False
+        pygame.display.update()
+
     # landry movement
     landryX += landryX_change
     if landryX <= 0:
@@ -394,6 +419,10 @@ while running:
     elif landryX >= 730:
         landryX = 730
     landryY += landryY_change
+    if landryY <= 350:
+        landryY = 350
+    elif landryY >= 470:
+        landryY = 470
 
     # player movement
     for i in range(num_of_players):
@@ -418,6 +447,7 @@ while running:
 
         playerF(playerX[i], playerY[i], i)
     # bullet movement
+
     if bulletY <= 0:
         bulletY = landryY
         bullet_state = "ready"
