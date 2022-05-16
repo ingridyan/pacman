@@ -164,8 +164,8 @@ def isCollision(playerX, playerY, bulletX, bulletY):
 
 # load button images
 start_img = pygame.image.load('start.png').convert_alpha()
-cast_img = pygame.image.load('start.png').convert_alpha()
-
+cast_img = pygame.image.load('cast.png').convert_alpha()
+playagain_img = pygame.image.load('playagain.png').convert_alpha()
 
 # button class
 class Button():
@@ -196,8 +196,9 @@ class Button():
 
 # create  button instances
 start_button = Button(100, 430, start_img, 0.6)
+playagain = Button(100, 430, playagain_img, 0.6)
 cast_button = Button(550, 430, cast_img, 0.6)
-start_button_for_cast = Button(300, 450, start_img, 0.6)
+start_button_for_cast = Button(300, 450, cast_img, 0.6)
 # 1st title page
 castPage = False
 running = False
@@ -395,21 +396,24 @@ while running:
     castfont = pygame.font.Font('freesansbold.ttf', 35)
     while endPage:
         screen.blit(background, (0, 0))
+        DEFAULT_IMAGE_SIZE = (450, 450)
+        lan_man_title = (pygame.transform.scale(lan_man_title, DEFAULT_IMAGE_SIZE))
+        screen.blit(lan_man_title, (170, 100))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 endPage = False
         ingridbio = castfont.render("Thanks for playing!", True, (0, 0, 0))
         screen.blit(ingridbio, (100,50))
-        if start_button.draw() == True:
+        if playagain.draw() == True:
             print("start clicked")
-            endPage = False
+            score = 0
             running = True
-            titlePageRun = False
+            endPage = False
         if cast_button.draw() == True:
             print("cast clicked")
-            endPage = False
             castPage = True
-            titlePageRun = False
+            running = False
+            endPage = False
         pygame.display.update()
 
     # landry movement
