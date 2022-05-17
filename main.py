@@ -199,6 +199,7 @@ start_button = Button(100, 430, start_img, 0.6)
 playagain = Button(100, 430, playagain_img, 0.6)
 cast_button = Button(550, 430, cast_img, 0.6)
 start_button_for_cast = Button(300, 450, cast_img, 0.6)
+playagain_for_end = Button(550, 200, playagain_img, 0.6)
 # 1st title page
 castPage = False
 running = False
@@ -394,25 +395,21 @@ while running:
                 landryY_change = 0
 
     castfont = pygame.font.Font('freesansbold.ttf', 35)
+
     while endPage:
         screen.blit(background, (0, 0))
         DEFAULT_IMAGE_SIZE = (450, 450)
         lan_man_title = (pygame.transform.scale(lan_man_title, DEFAULT_IMAGE_SIZE))
-        screen.blit(lan_man_title, (170, 100))
+        screen.blit(lan_man_title, (50, 100))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 endPage = False
         ingridbio = castfont.render("Thanks for playing!", True, (0, 0, 0))
         screen.blit(ingridbio, (100,50))
-        if playagain.draw() == True:
+        if playagain_for_end.draw() == True:
             print("start clicked")
             score = 0
             running = True
-            endPage = False
-        if cast_button.draw() == True:
-            print("cast clicked")
-            castPage = True
-            running = False
             endPage = False
         pygame.display.update()
 
