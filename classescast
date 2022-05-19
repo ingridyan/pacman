@@ -1,0 +1,104 @@
+import pygame
+
+from main import castfont, screen
+
+class Cast:
+
+    def BioCastPictures(self):
+        alexiscast = pygame.image.load('alexiscast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        alexiscast = (pygame.transform.scale(alexiscast, DEFAULT_IMAGE_SIZE))
+
+        ashlyncast = pygame.image.load('ashlyncast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        ashlyncast = (pygame.transform.scale(ashlyncast, DEFAULT_IMAGE_SIZE))
+
+        liliacast = pygame.image.load('liliacast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        liliacast = (pygame.transform.scale(liliacast, DEFAULT_IMAGE_SIZE))
+
+        landrycast = pygame.image.load('landrycast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        landrycast = (pygame.transform.scale(landrycast, DEFAULT_IMAGE_SIZE))
+
+        ingridcast = pygame.image.load('ingridcast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        ingridcast = (pygame.transform.scale(ingridcast, DEFAULT_IMAGE_SIZE))
+
+    def liliaBioCast(self):
+        liliabio = castfont.render("Lilia:", True, (0, 0, 0))
+        screen.blit(liliabio, (380, 250))
+        liliabio = castfont.render("ginger.", True, (0, 0, 0))
+        screen.blit(liliabio, (380, 275))
+
+    def ashlynBioCast(self):
+        ashlynbio = castfont.render("Ashlyn:", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 250))
+        ashlynbio = castfont.render("incredibly amazing,", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 275))
+        ashlynbio = castfont.render("kind human, who", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 300))
+        ashlynbio = castfont.render("is the biggest,", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 325))
+        ashlynbio = castfont.render("most bestest", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 350))
+        ashlynbio = castfont.render("person ever!", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 375))
+        ashlynbio = castfont.render("That's my bio.", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 400))
+        ashlynbio = castfont.render("Everyone adores,", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 425))
+        ashlynbio = castfont.render("her *of course*", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 450))
+        ashlynbio = castfont.render("Add that.", True, (0, 0, 0))
+        screen.blit(ashlynbio, (490, 475))
+
+    def alexisBioCast(self):
+        alexisbio = castfont.render("alexis:", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 250))
+        alexisbio = castfont.render("the swaggiest,", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 275))
+        alexisbio = castfont.render("most amazing person", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 300))
+        alexisbio = castfont.render("you'll ever meet.", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 325))
+        alexisbio = castfont.render("has never broken a ", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 350))
+        alexisbio = castfont.render("bone, or recieved a ", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 375))
+        alexisbio = castfont.render("B in a class.", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 400))
+        alexisbio = castfont.render("However, was once", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 425))
+        alexisbio = castfont.render(" sneezed on.", True, (0, 0, 0))
+        screen.blit(alexisbio, (195, 450))
+
+    def landryBioCast(self):
+        landrybio = castfont.render("Landry:", True, (0, 0, 0))
+        screen.blit(landrybio, (35, 250))
+        landrybio = castfont.render("the main character", True, (0, 0, 0))
+        screen.blit(landrybio, (35, 275))
+        landrybio = castfont.render("(only in her eyes)", True, (0, 0, 0))
+        screen.blit(landrybio, (35, 300))
+        landrybio = castfont.render("and super cool", True, (0, 0, 0))
+        screen.blit(landrybio, (35, 325))
+        landrybio = castfont.render("and swag and", True, (0, 0, 0))
+        screen.blit(landrybio, (35, 350))
+        landrybio = castfont.render("and will be famous", True, (0, 0, 0))
+        screen.blit(landrybio, (35, 375))
+
+    def ingridBioCast(self):
+        ingridbio = castfont.render("Ingrid:", True, (0, 0, 0))
+        screen.blit(ingridbio, (640, 250))
+        ingridbio = castfont.render("plays soccer,", True, (0, 0, 0))
+        screen.blit(ingridbio, (640, 275))
+        ingridbio = castfont.render("refs 24/7,", True, (0, 0, 0))
+        screen.blit(ingridbio, (640, 300))
+        ingridbio = castfont.render("hates IHOP,", True, (0, 0, 0))
+        screen.blit(ingridbio, (640, 325))
+        ingridbio = castfont.render("big fan of acai bowls", True, (0, 0, 0))
+        screen.blit(ingridbio, (640, 350))
+        ingridbio = castfont.render("killed a bunny whilst", True, (0, 0, 0))
+        screen.blit(ingridbio, (640, 375))
+        ingridbio = castfont.render("driving the yan van", True, (0, 0, 0))
+        screen.blit(ingridbio, (640, 400))
