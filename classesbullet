@@ -1,0 +1,39 @@
+# finger bullet
+import pygame
+from friends import Person
+
+class Bullet:
+
+    def __init__(self, bulletX, bulletY, bulletX_change, bulletY_change, bullet_state):
+        self.bulletX = bulletX
+        self.bulletY = bulletY
+        self.bulletX_change = bulletX_change
+        self.bulletY_change = bulletY_change
+        self.bullet_state = bullet_state
+
+    bullet = pygame.image.load('fingers.png')
+    DEFAULT_IMAGE_SIZE = (40, 40)
+    bullet = pygame.transform.scale(bullet, DEFAULT_IMAGE_SIZE)
+    # ready means you can't see bullet on the screen
+    # fire means bullet is currently moving
+    bulletX = 0
+    bulletY = 300
+    bulletX_change = 0
+    bulletY_change = 0.5
+    bullet_state = "ready"
+
+    def fire_bullet(self, x, y):
+        global bullet_state
+        bullet_state = "fire"
+        if Person.landryFacingRight == True:
+            screen.blit(bullet, (x + 50, y))
+        if landryFacingRight == False:
+            screen.blit(bullet, (x - 50, y))
+
+    # bullet movement
+    if bulletY <= 0:
+        bulletY = landryY
+        bullet_state = "ready"
+    if bullet_state is "fire":
+        fire_bullet(bulletX, bulletY)
+        bulletY -= bulletY_change
