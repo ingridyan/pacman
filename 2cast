@@ -1,11 +1,11 @@
 import pygame
 
-from main import screen, castfont
-
+from main import screen
 
 class Cast:
+    castfont = pygame.font.Font('freesansbold.ttf', 15)
 
-    def BioCastPictures(self):
+    def BioCastPictures():
         alexiscast = pygame.image.load('alexiscast.jpg')
         DEFAULT_IMAGE_SIZE = (130, 170)
         alexiscast = (pygame.transform.scale(alexiscast, DEFAULT_IMAGE_SIZE))
@@ -26,13 +26,43 @@ class Cast:
         DEFAULT_IMAGE_SIZE = (130, 170)
         ingridcast = (pygame.transform.scale(ingridcast, DEFAULT_IMAGE_SIZE))
 
-    def liliaBioCast(self):
+        screen.blit(Cast.alexisCast, (200, 75))
+        screen.blit(Cast.landrycast, (50, 75))
+        screen.blit(Cast.ashlyncast, (500, 75))
+        screen.blit(Cast.liliacast, (350, 75))
+        screen.blit(Cast.ingridcast, (650, 75))
+
+    def standCast():
+        DEFAULT_IMAGE_SIZE_LILIA = (80, 140)
+        DEFAULT_IMAGE_SIZE_ALEX = (90, 153)
+        DEFAULT_IMAGE_SIZE_FOR_INGY = (65, 125)
+        DEFAULT_IMAGE_SIZE_FOR_ASH = (70, 130)
+        DEFAULT_IMAGE_SIZE = (70, 140)
+
+        ashlynStand = pygame.image.load('ashlynstanding png.png')
+        ashlynStand = (pygame.transform.scale(ashlynStand, DEFAULT_IMAGE_SIZE_FOR_ASH))
+        alexisStand = pygame.image.load('alexisstanding png.png')
+        alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE_ALEX))
+        liliaStand = pygame.image.load('liliastanding png.png')
+        liliaStand = (pygame.transform.scale(liliaStand, DEFAULT_IMAGE_SIZE_LILIA))
+        ingyStand = pygame.image.load('ingridstanding png.png')
+        ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE_FOR_INGY))
+        landryStand = pygame.image.load('landrystanding png.png')
+        landryStand = (pygame.transform.scale(landryStand, DEFAULT_IMAGE_SIZE))
+
+        screen.blit(landryStand, (50, 400))
+        screen.blit(ashlynStand, (558, 450))
+        screen.blit(alexisStand, (200, 450))
+        screen.blit(liliaStand, (370, 300))
+        screen.blit(ingyStand, (700, 450))
+
+    def liliaBioCast():
         liliabio = castfont.render("Lilia:", True, (0, 0, 0))
         screen.blit(liliabio, (380, 250))
         liliabio = castfont.render("ginger.", True, (0, 0, 0))
         screen.blit(liliabio, (380, 275))
 
-    def ashlynBioCast(self):
+    def ashlynBioCast():
         ashlynbio = castfont.render("Ashlyn:", True, (0, 0, 0))
         screen.blit(ashlynbio, (490, 250))
         ashlynbio = castfont.render("incredibly amazing,", True, (0, 0, 0))
@@ -54,7 +84,7 @@ class Cast:
         ashlynbio = castfont.render("Add that.", True, (0, 0, 0))
         screen.blit(ashlynbio, (490, 475))
 
-    def alexisBioCast(self):
+    def alexisBioCast():
         alexisbio = castfont.render("alexis:", True, (0, 0, 0))
         screen.blit(alexisbio, (195, 250))
         alexisbio = castfont.render("the swaggiest,", True, (0, 0, 0))
@@ -74,7 +104,7 @@ class Cast:
         alexisbio = castfont.render(" sneezed on.", True, (0, 0, 0))
         screen.blit(alexisbio, (195, 450))
 
-    def landryBioCast(self):
+    def landryBioCast():
         landrybio = castfont.render("Landry:", True, (0, 0, 0))
         screen.blit(landrybio, (35, 250))
         landrybio = castfont.render("the main character", True, (0, 0, 0))
@@ -88,7 +118,7 @@ class Cast:
         landrybio = castfont.render("and will be famous", True, (0, 0, 0))
         screen.blit(landrybio, (35, 375))
 
-    def ingridBioCast(self):
+    def ingridBioCast():
         ingridbio = castfont.render("Ingrid:", True, (0, 0, 0))
         screen.blit(ingridbio, (640, 250))
         ingridbio = castfont.render("plays soccer,", True, (0, 0, 0))
