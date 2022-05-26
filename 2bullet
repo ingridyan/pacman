@@ -1,6 +1,8 @@
 # finger bullet
 import pygame
 from friends import Person
+from main import screen
+
 
 class Bullet:
 
@@ -11,16 +13,16 @@ class Bullet:
         self.bulletY_change = bulletY_change
         self.bullet_state = bullet_state
 
-    bullet = pygame.image.load('fingers.png')
-    DEFAULT_IMAGE_SIZE = (40, 40)
-    bullet = pygame.transform.scale(bullet, DEFAULT_IMAGE_SIZE)
-    # ready means you can't see bullet on the screen
-    # fire means bullet is currently moving
-    bulletX = 0
-    bulletY = 300
-    bulletX_change = 0
-    bulletY_change = 0.5
-    bullet_state = "ready"
+bullet = pygame.image.load('fingers.png')
+DEFAULT_IMAGE_SIZE = (40, 40)
+bullet = pygame.transform.scale(bullet, DEFAULT_IMAGE_SIZE)
+# ready means you can't see bullet on the screen
+# fire means bullet is currently moving
+bulletX = 0
+bulletY = 300
+bulletX_change = 0
+bulletY_change = 0.5
+bullet_state = "ready"
 
     def fire_bullet(self, x, y):
         global bullet_state
