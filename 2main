@@ -3,7 +3,7 @@ import random
 import math
 
 # initialize pygame
-import cast
+import Cast
 import friends
 from button import Button
 
@@ -99,31 +99,14 @@ while titlePageRun:
     # meet the cast page
     while castPage:
         screen.fill((202, 228, 241))
-        screen.blit(cast.alexisCast, (200, 75))
-        screen.blit(cast.landrycast, (50, 75))
-        screen.blit(cast.ashlyncast, (500, 75))
-        screen.blit(cast.liliacast, (350, 75))
-        screen.blit(cast.ingridcast, (650, 75))
 
-        castfont = pygame.font.Font('freesansbold.ttf', 15)
         Cast.BioCastPictures()
         Cast.liliaBioCast()
         Cast.ashlynBioCast()
         Cast.alexisBioCast()
         Cast.landryBioCast()
         Cast.ingridBioCast()
-
-        DEFAULT_IMAGE_SIZE = (70, 140)
-        landryStand = pygame.image.load('landrystanding png.png')
-        landryStand = (pygame.transform.scale(landryStand, DEFAULT_IMAGE_SIZE))
-        alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE))
-        DEFAULT_IMAGE_SIZE = (75, 145)
-        ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE))
-        screen.blit(landryStand, (50, 400))
-        screen.blit(ashlynStand, (558, 450))
-        screen.blit(alexisStand, (200, 450))
-        screen.blit(liliaStand, (370, 300))
-        screen.blit(ingyStand, (700, 450))
+        Cast.standCast()
 
         meetthecast = font.render("Meet the Cast", True, (0, 0, 0))
         screen.blit(meetthecast, (50, 0))
