@@ -2,51 +2,113 @@ import pygame
 import math
 import random
 
+
 class Person:
-    def __init__(self, person, personX, personY, personX_change, personY_change, personFacingRight, personFacingLeft):
-        self.person = person
-        self.personX = personX
-        self.personY = personY
-        self.personX_change = personX_change
-        self.personY_change = personY_change
-        self.personFacingRight = personFacingRight
-        self.personFacingLeft = personFacingLeft
+    def __init__(self, screen, name, x, y, xRate, yRate, facingRight, imageSizeX, imageSizeY, imageName, isShooter):
+        self.name = name
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.xRate = xRate
+        self.yRate = yRate
+        self.facingRight = facingRight
 
-    def fullname(self):
-        return '{} {} {} {} {} {}'.format(self.person, self.personX, self.personY, self.personX_change, self.personY_change,
-                              self.personFacingRight, self.personFacingLeft)
+        self.imageSizeX = imageSizeX
+        self.imageSizeY = imageSizeY
 
-DEFAULT_IMAGE_SIZE_LILIA = (80, 140)
-DEFAULT_IMAGE_SIZE_ALEX = (90, 153)
-DEFAULT_IMAGE_SIZE_FOR_INGY = (65, 125)
-DEFAULT_IMAGE_SIZE_FOR_ASH = (70, 130)
+        self.isShooter = isShooter
+        self.isAlive = True
 
-ashlynIMG = pygame.image.load('ashlyn walking png.png')
-alexisIMG = pygame.image.load('alexis walking png.png')
-liliaIMG = pygame.image.load('lilia png.png')
-ingyIMG = pygame.image.load('ingrid walking png.png')
+        self.imageWalkingRight = pygame.image.load(imageName)
+        self.imageWalkingRight = (pygame.transform.scale(self.imageWalkingRight, (imageSizeX, imageSizeY)))
+        self.imageWalkingLeft = pygame.transform.flip(self.imageWalkingRight, True, False)
 
-ashlynStand = pygame.image.load('ashlynstanding png.png')
-ashlynStand = (pygame.transform.scale(ashlynStand, DEFAULT_IMAGE_SIZE_FOR_ASH))
-alexisStand = pygame.image.load('alexisstanding png.png')
-alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE_ALEX))
-liliaStand = pygame.image.load('liliastanding png.png')
-liliaStand = (pygame.transform.scale(liliaStand, DEFAULT_IMAGE_SIZE_LILIA))
-ingyStand = pygame.image.load('ingridstanding png.png')
-ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE_FOR_INGY))
+    def displayinfo(self):
+        return '{} {} {} {} {} {}'.format(self.name, self.x, self.y, self.xRate, self.yRate,
+                                          self.facingRight)
 
-ashlynIMG = (pygame.transform.scale(ashlynIMG, DEFAULT_IMAGE_SIZE_FOR_ASH))
-leftashlynIMG = pygame.transform.flip(ashlynIMG, True, False)
-alexisIMG = (pygame.transform.scale(alexisIMG, DEFAULT_IMAGE_SIZE_ALEX))
-leftalexisIMG = pygame.transform.flip(alexisIMG, True, False)
-liliaIMG = (pygame.transform.scale(liliaIMG, DEFAULT_IMAGE_SIZE_LILIA))
-leftliliaIMG = pygame.transform.flip(liliaIMG, True, False)
-ingyIMG = (pygame.transform.scale(ingyIMG, DEFAULT_IMAGE_SIZE_FOR_INGY))
-leftingyIMG = pygame.transform.flip(ingyIMG, True, False)
+    def ifCollision(self, bulletX, bulletY):
+        distance = math.sqrt((math.pow(self.x - bulletX, 2)) + (math.pow(self.y - bulletY, 2)))
+        if distance < 70:
+            return True
+        else:
+            return False
 
-ashlyn = Person(ashlynIMG,  random.randint(0, 730), random.randint(25, 150), 0.2, 30, True, leftashlynIMG)
-alexis = Person(alexisIMG,  random.randint(0, 730), random.randint(25, 150), 0.2, 30, True, leftalexisIMG)
-lilia = Person(liliaIMG,  random.randint(0, 730), random.randint(25, 150), 0.2, 30, True, leftliliaIMG)
-ingrid = Person(ingyIMG,  random.randint(0, 730), random.randint(25, 150), 0.2, 30, True, leftingyIMG)
+    def drawPerson(self, bulletX, bulletY):
+        if self.isShooter:
+            self.isAlive = True
+        else:
+            if self.ifCollision(bulletX, bulletY) == True:
+                self.isAlive = False
 
-print(lilia.fullname())
+        if self.isAlive:
+            if self.facingRight == True:
+                self.screen.blit(self.imageWalkingRight, (self.x, self.y))
+            else:
+                self.screen.blit(self.imageWalkingLeft, (self.x, self.y))
+
+    def movePerson(self):
+        self.x += self.xRate
+        if self.isShooter == True:
+            if self.x <= 0:
+                self.x = 0
+            elif self.x >= 730:
+                self.x = 730
+            self.y += self.yRate
+            if self.y <= 350:
+                self.y = 350
+            elif self.y >= 470:
+                self.y = 470
+        else:
+            self.x += self.xRate
+            if self.x <= 0:
+                self.xRate = -self.xRate
+                self.imageWalkingRight = True
+                self.y += self.yRate
+            elif self.x >= 730:
+                self.xRate = -self.xRate
+                self.imageWalkingRight = False
+                self.y += self.yRate
+
+
+
+    def respondKeyDownEvent(self, event):
+        if self.isShooter == False:
+            return
+        else:
+            # moving left and right
+            if event.key == pygame.K_LEFT:
+                self.imageWalkingRight = False
+
+            if event.key == pygame.K_RIGHT:
+                self.imageWalkingRight = True
+            self.xRate = -self.xRate
+
+            # moving up and down
+            if event.key == pygame.K_UP:
+                self.yRate = - math.fabs(self.yRate)
+            if event.key == pygame.K_DOWN:
+                self.yRate = math.fabs(self.yRate)
+
+
+    def respondKeyUpEvent(self, event):
+        if self.isShooter == False:
+            return
+        else:
+            # moving left and right
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                self.xRate = 0
+            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                self.yRate = 0
+
+    def getY(self):
+        return self.y
+
+    def getX(self):
+        return self.x
+
+    def getIsShooter(self):
+        return self.isShooter
+
+    def getIsFacingRight(self):
+        return self.facingRight
