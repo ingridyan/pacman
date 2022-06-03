@@ -1,7 +1,6 @@
-# finger bullet
+
 import pygame
 from friends import Person
-
 
 class Bullet:
 
@@ -41,7 +40,7 @@ class Bullet:
                 self.screen.blit(self.bullet, self.x, self.y)
 
     def getX(self):
-        return self.x;
+        return self.x
 
     def getY(self):
-        return self.y;
+        return self.y
