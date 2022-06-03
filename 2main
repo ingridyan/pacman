@@ -27,7 +27,7 @@ pygame.display.set_icon(icon)
 FriendsList = []
 
 FriendsList.append(Person(screen, "ashlyn", random.randint(0, 730), random.randint(25, 150), 0.2, 30, True,
-                          70, 60, "ashlyn walking png.png", False))
+                          70, 130, "ashlyn walking png.png", False))
 
 FriendsList.append(Person(screen, "alexis", random.randint(0, 730), random.randint(25, 150), 0.2, 30, True,
                           90, 153, "alexis walking png.png", False))
@@ -41,15 +41,11 @@ FriendsList.append(Person(screen, "ingrid", random.randint(0, 730), random.randi
 FriendsList.append(Person(screen, "landry", random.randint(0, 730), random.randint(25, 150), 0.4, 0.4, True,
                           70, 130, "landry walking png.png", True))
 
-
-
-score = 0
-
-goldbullet = Bullet(screen, 0, 300, 0.5, False, FriendsList[-1])
+mybullet = Bullet(screen, 0, 300, 0.5, False, FriendsList[-1])
 
 # score and title
-
 font = pygame.font.Font('freesansbold.ttf', 32)
+score = 0
 textX = 10
 textY = 10
 
@@ -79,13 +75,15 @@ playagain_img = pygame.image.load('playagain.png').convert_alpha()
 start_button = Button(100, 430, start_img, 0.6, screen)
 playagain = Button(100, 430, playagain_img, 0.6, screen)
 cast_button = Button(550, 430, cast_img, 0.6, screen)
-start_button_for_cast = Button(300, 450, cast_img, 0.6, screen)
+start_button_for_cast = Button(300, 450, start_img, 0.6, screen)
 playagain_for_end = Button(550, 200, playagain_img, 0.6, screen)
+
 # 1st title page
 castPage = False
 running = False
 titlePageRun = True
 endPage = False
+
 while titlePageRun:
     screen.blit(background, (0, 0))
     show_titlepage(textX, textY)
@@ -123,8 +121,6 @@ while castPage:
 
 # game loop, make sure window doesn't close down
 
-
-
 while running:
     screen.fill((133, 186, 204))
     screen.blit(background, (0, 0))
@@ -138,20 +134,19 @@ while running:
         if event.type == pygame.KEYDOWN:
             for eachPerson in FriendsList:
                 eachPerson.respondKeyDownEvent(event)
-            goldbullet.RespondKeyDownEvent(event)
+            mybullet.RespondKeyDownEvent(event)
         if event.type == pygame.KEYUP:
             for eachPerson in FriendsList:
                 eachPerson.respondKeyUpEvent(event)
 
     for eachPerson in FriendsList:
         eachPerson.movePerson()
-        eachPerson.drawPerson(goldbullet.getX(), goldbullet.getY())
+        eachPerson.drawPerson(mybullet.getX(), mybullet.getY())
 
-    goldbullet.moveAndDrawBullet()
+    mybullet.moveAndDrawBullet()
 
     show_score(textX, textY)
     pygame.display.update()
-
 
     while endPage:
         castfont = pygame.font.Font('freesansbold.ttf', 35)
@@ -172,5 +167,3 @@ while running:
         pygame.display.update()
 
     pygame.display.update()
-
-
