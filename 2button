@@ -1,16 +1,14 @@
 import pygame
 
-from main import screen
-
-
-class Button():
-    def __init__(self, x, y, image, scale):
+class Button:
+    def __init__(self, x, y, image, scale, screen):
         width = image.get_width()
         height = image.get_height()
         self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
+        self.screen = screen
 
     def draw(self):
         action = False
@@ -24,15 +22,8 @@ class Button():
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
         # draw button
-        screen.blit(self.image, (self.rect.x, self.rect.y))
+        self.screen.blit(self.image, (self.rect.x, self.rect.y))
 
         return action
 
-start_img = pygame.image.load('start.png').convert_alpha()
-cast_img = pygame.image.load('cast.png').convert_alpha()
-playagain_img = pygame.image.load('playagain.png').convert_alpha()
 
-start_button = Button(100, 430, start_img, 0.6)
-cast_button = Button(550, 430, cast_img, 0.6)
-start_button_for_cast = Button(300, 450, start_img, 0.6)
-playagain_for_end = Button(550, 200, playagain_img, 0.6)
