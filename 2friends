@@ -1,6 +1,5 @@
 import pygame
 import math
-import random
 
 
 class Person:
@@ -63,11 +62,11 @@ class Person:
             self.x += self.xRate
             if self.x <= 0:
                 self.xRate = -self.xRate
-                self.imageWalkingRight = True
+                self.facingRight = True
                 self.y += self.yRate
             elif self.x >= 730:
                 self.xRate = -self.xRate
-                self.imageWalkingRight = False
+                self.facingRight = False
                 self.y += self.yRate
 
 
