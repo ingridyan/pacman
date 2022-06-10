@@ -1,6 +1,10 @@
+# This class keeps creates the buttons
+# draws the button
 import pygame
 
+#button class
 class Button:
+    #initialize button variables
     def __init__(self, x, y, image, scale, screen):
         width = image.get_width()
         height = image.get_height()
@@ -8,8 +12,10 @@ class Button:
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
+        #import screen from main
         self.screen = screen
 
+# returns true if and draws button if button si clicked
     def draw(self):
         action = False
         # get mouse position
@@ -25,3 +31,5 @@ class Button:
         self.screen.blit(self.image, (self.rect.x, self.rect.y))
 
         return action
+
+
