@@ -1,53 +1,158 @@
-# This class keeps track and creates the bullet variables
-# moves, and draws bullet, and responds to when the space bar is pressed
+# This class is mostly for organizational purposes
+# used to deal with cast pictures and text
 import pygame
 
-class Bullet:
-    # My initializer, imported the screen from the main in to avoid circular import error
-    # keeps track of bullet variables
-    def __init__(self, screen, x, y, yRate, isFiring, shooter):
-        #variables are pretty self explanatory
+
+# desplays cast photos and cast bios
+class CastBio:
+
+    # import screen from main as a paramenter
+    def __init__(self, screen):
         self.screen = screen
-        self.x = x
-        self.y = y
-        self.yRate = yRate
-        self.isFiring = isFiring
-        self.shooter = shooter
-        self.bullet = pygame.image.load('fingers.png')
-        self.bullet = pygame.transform.scale(self.bullet, (40, 40))
 
-#bullet movement and draw bullet
-    def moveAndDrawBullet(self):
-        # bullet movement
-        if self.y <= 0:
-            self.y = self.shooter.getY()
-            if self.shooter.getIsFacingRight():
-                self.x = self.shooter.getX() + 50
-            else:
-                self.x = self.shooter.getX() - 50
-            self.isFiring = False
-        if self.isFiring:
-            self.y -= self.yRate
-            self.screen.blit(self.bullet, (self.x, self.y))
+    # resizes, and displays cast pictures
+    def BioCastPictures(self, _castfont):
+        alexiscast = pygame.image.load('alexiscast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        alexiscast = (pygame.transform.scale(alexiscast, DEFAULT_IMAGE_SIZE))
 
-    #respond to when space bar is pressed
-    def RespondKeyDownEvent(self, event):
-        if event.key == pygame.K_SPACE:
-            #turn isFiring variable to true
-            if not self.isFiring:
-                self.isFiring = True
-                self.y = self.shooter.getY()
-                if self.shooter.getIsFacingRight():
-                    #get the position of shooter and shoot from her "hand"
-                    self.x = self.shooter.getX() + 50
-                else:
-                    self.x = self.shooter.getX() - 50
-                    #draw bullet
-                self.screen.blit(self.bullet, (self.x, self.y))
+        ashlyncast = pygame.image.load('ashlyncast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        ashlyncast = (pygame.transform.scale(ashlyncast, DEFAULT_IMAGE_SIZE))
 
-#getter functions, pretty self explanatory
-    def getX(self):
-        return self.x;
+        liliacast = pygame.image.load('liliacast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        liliacast = (pygame.transform.scale(liliacast, DEFAULT_IMAGE_SIZE))
 
-    def getY(self):
-        return self.y;
+        landrycast = pygame.image.load('landrycast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        landrycast = (pygame.transform.scale(landrycast, DEFAULT_IMAGE_SIZE))
+
+        ingridcast = pygame.image.load('ingridcast.jpg')
+        DEFAULT_IMAGE_SIZE = (130, 170)
+        ingridcast = (pygame.transform.scale(ingridcast, DEFAULT_IMAGE_SIZE))
+
+        self.screen.blit(alexiscast, (200, 75))
+        self.screen.blit(landrycast, (50, 75))
+        self.screen.blit(ashlyncast, (500, 75))
+        self.screen.blit(liliacast, (350, 75))
+        self.screen.blit(ingridcast, (650, 75))
+
+    # resizes, and displays cast cartoons
+    def standCast(self, _castfont):
+        DEFAULT_IMAGE_SIZE_LILIA = (80, 140)
+        DEFAULT_IMAGE_SIZE_ALEX = (90, 153)
+        DEFAULT_IMAGE_SIZE_FOR_INGY = (65, 125)
+        DEFAULT_IMAGE_SIZE_FOR_ASH = (70, 130)
+        DEFAULT_IMAGE_SIZE = (70, 140)
+
+        ashlynStand = pygame.image.load('ashlynstanding png.png')
+        ashlynStand = (pygame.transform.scale(ashlynStand, DEFAULT_IMAGE_SIZE_FOR_ASH))
+        alexisStand = pygame.image.load('alexisstanding png.png')
+        alexisStand = (pygame.transform.scale(alexisStand, DEFAULT_IMAGE_SIZE_ALEX))
+        liliaStand = pygame.image.load('liliastanding png.png')
+        liliaStand = (pygame.transform.scale(liliaStand, DEFAULT_IMAGE_SIZE_LILIA))
+        ingyStand = pygame.image.load('ingridstanding png.png')
+        ingyStand = (pygame.transform.scale(ingyStand, DEFAULT_IMAGE_SIZE_FOR_INGY))
+        landryStand = pygame.image.load('landrystanding png.png')
+        landryStand = (pygame.transform.scale(landryStand, DEFAULT_IMAGE_SIZE))
+
+        self.screen.blit(landryStand, (50, 400))
+        self.screen.blit(ashlynStand, (558, 450))
+        self.screen.blit(alexisStand, (200, 450))
+        self.screen.blit(liliaStand, (370, 300))
+        self.screen.blit(ingyStand, (700, 450))
+
+    # print lilias bio
+    def liliaBioCast(self, _castfont):
+        liliabio = _castfont.render("Lilia:", True, (0, 0, 0))
+        self.screen.blit(liliabio, (380, 250))
+        liliabio = _castfont.render("ginger.", True, (0, 0, 0))
+        self.screen.blit(liliabio, (380, 275))
+
+    # print ashlyn bio
+    def ashlynBioCast(self, _castfont):
+        ashlynbio = _castfont.render("Ashlyn:", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 250))
+        ashlynbio = _castfont.render("incredibly amazing,", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 275))
+        ashlynbio = _castfont.render("kind human, who", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 300))
+        ashlynbio = _castfont.render("is the biggest,", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 325))
+        ashlynbio = _castfont.render("most bestest", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 350))
+        ashlynbio = _castfont.render("person ever!", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 375))
+        ashlynbio = _castfont.render("That's my bio.", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 400))
+        ashlynbio = _castfont.render("Everyone adores,", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 425))
+        ashlynbio = _castfont.render("her *of course*", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 450))
+        ashlynbio = _castfont.render("Add that.", True, (0, 0, 0))
+        self.screen.blit(ashlynbio, (490, 475))
+
+    # print alexis bio
+    def alexisBioCast(self, _castfont):
+        alexisbio = _castfont.render("alexis:", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 250))
+        alexisbio = _castfont.render("the swaggiest,", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 275))
+        alexisbio = _castfont.render("most amazing person", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 300))
+        alexisbio = _castfont.render("you'll ever meet.", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 325))
+        alexisbio = _castfont.render("has never broken a ", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 350))
+        alexisbio = _castfont.render("bone, or recieved a ", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 375))
+        alexisbio = _castfont.render("B in a class.", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 400))
+        alexisbio = _castfont.render("However, was once", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 425))
+        alexisbio = _castfont.render(" sneezed on.", True, (0, 0, 0))
+        self.screen.blit(alexisbio, (195, 450))
+
+    # print landry bio
+    def landryBioCast(self, _castfont):
+        landrybio = _castfont.render("Landry:", True, (0, 0, 0))
+        self.screen.blit(landrybio, (35, 250))
+        landrybio = _castfont.render("the main character", True, (0, 0, 0))
+        self.screen.blit(landrybio, (35, 275))
+        landrybio = _castfont.render("(only in her eyes)", True, (0, 0, 0))
+        self.screen.blit(landrybio, (35, 300))
+        landrybio = _castfont.render("and super cool", True, (0, 0, 0))
+        self.screen.blit(landrybio, (35, 325))
+        landrybio = _castfont.render("and swag and", True, (0, 0, 0))
+        self.screen.blit(landrybio, (35, 350))
+        landrybio = _castfont.render("and will be famous", True, (0, 0, 0))
+        self.screen.blit(landrybio, (35, 375))
+
+    # print ingrid bio
+    def ingridBioCast(self, _castfont):
+        ingridbio = _castfont.render("Ingrid:", True, (0, 0, 0))
+        self.screen.blit(ingridbio, (640, 250))
+        ingridbio = _castfont.render("plays soccer,", True, (0, 0, 0))
+        self.screen.blit(ingridbio, (640, 275))
+        ingridbio = _castfont.render("refs 24/7,", True, (0, 0, 0))
+        self.screen.blit(ingridbio, (640, 300))
+        ingridbio = _castfont.render("hates IHOP,", True, (0, 0, 0))
+        self.screen.blit(ingridbio, (640, 325))
+        ingridbio = _castfont.render("big fan of acai bowls", True, (0, 0, 0))
+        self.screen.blit(ingridbio, (640, 350))
+        ingridbio = _castfont.render("killed a bunny whilst", True, (0, 0, 0))
+        self.screen.blit(ingridbio, (640, 375))
+        ingridbio = _castfont.render("driving the yan van", True, (0, 0, 0))
+        self.screen.blit(ingridbio, (640, 400))
+
+    # calls all the methods at the same time so in main class its much simpler.
+    def castAll(self):
+        _castfont = pygame.font.Font('freesansbold.ttf', 15)
+        self.BioCastPictures(_castfont)
+        self.liliaBioCast(_castfont)
+        self.ashlynBioCast(_castfont)
+        self.alexisBioCast(_castfont)
+        self.landryBioCast(_castfont)
+        self.ingridBioCast(_castfont)
+        self.standCast(_castfont)
