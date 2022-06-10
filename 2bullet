@@ -1,20 +1,22 @@
-
+# This class keeps track and creates the bullet variables
+# moves, and draws bullet, and responds to when the space bar is pressed
 import pygame
-from friends import Person
 
 class Bullet:
-
+    # My initializer, imported the screen from the main in to avoid circular import error
+    # keeps track of bullet variables
     def __init__(self, screen, x, y, yRate, isFiring, shooter):
+        #variables are pretty self explanatory
         self.screen = screen
         self.x = x
         self.y = y
         self.yRate = yRate
         self.isFiring = isFiring
         self.shooter = shooter
-
         self.bullet = pygame.image.load('fingers.png')
         self.bullet = pygame.transform.scale(self.bullet, (40, 40))
 
+#bullet movement and draw bullet
     def moveAndDrawBullet(self):
         # bullet movement
         if self.y <= 0:
@@ -26,21 +28,26 @@ class Bullet:
             self.isFiring = False
         if self.isFiring:
             self.y -= self.yRate
-            self.screen.blit(self.bullet, self.x, self.y)
+            self.screen.blit(self.bullet, (self.x, self.y))
 
+    #respond to when space bar is pressed
     def RespondKeyDownEvent(self, event):
         if event.key == pygame.K_SPACE:
+            #turn isFiring variable to true
             if not self.isFiring:
                 self.isFiring = True
                 self.y = self.shooter.getY()
                 if self.shooter.getIsFacingRight():
+                    #get the position of shooter and shoot from her "hand"
                     self.x = self.shooter.getX() + 50
                 else:
                     self.x = self.shooter.getX() - 50
-                self.screen.blit(self.bullet, self.x, self.y)
+                    #draw bullet
+                self.screen.blit(self.bullet, (self.x, self.y))
 
+#getter functions, pretty self explanatory
     def getX(self):
-        return self.x
+        return self.x;
 
     def getY(self):
-        return self.y
+        return self.y;
