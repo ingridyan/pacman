@@ -1,13 +1,13 @@
+#This is the main class. It is where evertything runs from
+#This is where I keep track of what pages are running, the start page, cast page, and end page.
 import pygame
 import random
-import math
 
-# initialize pygame
+#import from other classes
 from bulletclass import Bullet
 from castBio import CastBio
 from button import Button
 from friends import Person
-
 
 pygame.init()
 
@@ -24,28 +24,24 @@ pygame.display.set_caption("Bae Watch")
 icon = pygame.image.load('camera.png')
 pygame.display.set_icon(icon)
 
+#creating all Friends characters
 FriendsList = []
 
-FriendsList.append(Person(screen, "ashlyn", random.randint(0, 730), random.randint(25, 150), 0.2, 30, True,
+FriendsList.append(Person(screen, "ashlyn", random.randint(0, 730), random.randint(25, 150), 0.5, 30, True,
                           70, 130, "ashlyn walking png.png", False))
-
-FriendsList.append(Person(screen, "alexis", random.randint(0, 730), random.randint(25, 150), 0.2, 30, True,
+FriendsList.append(Person(screen, "alexis", random.randint(0, 730), random.randint(25, 150), 0.5, 30, True,
                           90, 153, "alexis walking png.png", False))
-
-FriendsList.append(Person(screen, "lilia", random.randint(0, 730), random.randint(25, 150), 0.2, 30, True,
+FriendsList.append(Person(screen, "lilia", random.randint(0, 730), random.randint(25, 150), 0.5, 30, True,
                           80, 140, "lilia png.png", False))
-
-FriendsList.append(Person(screen, "ingrid", random.randint(0, 730), random.randint(25, 150), 0.2, 30, True,
+FriendsList.append(Person(screen, "ingrid", random.randint(0, 730), random.randint(25, 150), 0.5, 30, True,
                           65, 125, "ingrid walking png.png", False))
-
-FriendsList.append(Person(screen, "landry", random.randint(0, 730), random.randint(25, 150), 0.4, 0.4, True,
+FriendsList.append(Person(screen, "landry", random.randint(0, 730), random.randint(25, 150), 0, 0, True,
                           70, 130, "landry walking png.png", True))
 
-mybullet = Bullet(screen, 0, 300, 0.5, False, FriendsList[-1])
-
-# score and title
-font = pygame.font.Font('freesansbold.ttf', 32)
+#score, text,  and creating bullet object
 score = 0
+goldbullet = Bullet(screen, 0, 300, 0.8, False, FriendsList[-1])
+font = pygame.font.Font('freesansbold.ttf', 32)
 textX = 10
 textY = 10
 
@@ -54,12 +50,12 @@ lan_man_title = pygame.image.load('attackoflanman.png')
 DEFAULT_IMAGE_SIZE = (500, 500)
 lan_man_title = (pygame.transform.scale(lan_man_title, DEFAULT_IMAGE_SIZE))
 
-
+#shows ingrid yan text on title page
 def show_titlepage(x, y):
     shown_title = font.render("Ingrid Yan", True, (0, 0, 0))
     screen.blit(shown_title, (x, y))
 
-
+#shows score text
 def show_score(x, y):
     # typecasting
     shown_score = font.render("Score: " + str(score), True, (0, 0, 0))
@@ -84,86 +80,123 @@ running = False
 titlePageRun = True
 endPage = False
 
+#controls when and what the title page shows
 while titlePageRun:
+    #setting up the screen to look pretty
     screen.blit(background, (0, 0))
     show_titlepage(textX, textY)
     screen.blit(lan_man_title, (150, 50))
+
+    #when the start button is pressed, start the game
     if start_button.draw() == True:
         print("start clicked")
         running = True
         titlePageRun = False
+    #when the cast button is pressed, go to cast
     if cast_button.draw() == True:
         print("cast clicked")
         castPage = True
         titlePageRun = False
+    #when the red x is pressed, end the game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             titlePageRun = False
     pygame.display.update()
 
+#controls when and what the cast page shows
 while castPage:
+    #setting up the screen to look pretty
     screen.fill((202, 228, 241))
-
     meetthecast = font.render("Meet the Cast", True, (0, 0, 0))
     screen.blit(meetthecast, (50, 0))
-
+    #print all the cast texts
     myCast = CastBio(screen)
     myCast.castAll()
 
+    #when start button is pressed, run the game
     if start_button_for_cast.draw() == True:
         print("start clicked")
         running = True
         castPage = False
+    #when the red x is pressed, end the game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             castPage = False
     pygame.display.update()
 
-# game loop, make sure window doesn't close down
-
+#controls when and what the game page shows
 while running:
     screen.fill((133, 186, 204))
     screen.blit(background, (0, 0))
+
+    # counts how many ppl have been captured and the score
+    count = 0
+    score = 0
+    for player in FriendsList:
+        if not player.isAlive:
+            count += 1
+    score = count
+
+    #once all people are carptured, end the game
+    if score >= 4:
+        running = False
+        endPage = True
+    #when the red x is pressed, end the game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        # if keystroke is pressed check whether its right or left
-        if score == 2:
-            running = False
-            endPage = True
+
+        # if wasd is pressed, call the method respondKeyDownEvent in friends class
+        # to see what to do
         if event.type == pygame.KEYDOWN:
             for eachPerson in FriendsList:
                 eachPerson.respondKeyDownEvent(event)
-            mybullet.RespondKeyDownEvent(event)
+            #bullet responds to space bar
+            goldbullet.RespondKeyDownEvent(event)
+        #once the key is not being pressed anymore, person stops moving
         if event.type == pygame.KEYUP:
             for eachPerson in FriendsList:
                 eachPerson.respondKeyUpEvent(event)
 
+    #movement for each person
     for eachPerson in FriendsList:
+        #movement
         eachPerson.movePerson()
-        eachPerson.drawPerson(mybullet.getX(), mybullet.getY())
+        #sees if person is still alive
+        eachPerson.drawPerson(goldbullet.isFiring, goldbullet.getX(), goldbullet.getY())
+        #sees is the state of the bullet is still firing
+        if (goldbullet.isFiring == True and eachPerson.ifCollision(goldbullet.getX(), goldbullet.getY())):
+            goldbullet.isFiring = False
+    goldbullet.moveAndDrawBullet()
 
-    mybullet.moveAndDrawBullet()
-
+    #calls show score method where it desplays the score on the screen
     show_score(textX, textY)
     pygame.display.update()
 
+    # controls when and what the end page shows
     while endPage:
+        #make screen look pretty
         castfont = pygame.font.Font('freesansbold.ttf', 35)
         screen.blit(background, (0, 0))
         DEFAULT_IMAGE_SIZE = (450, 450)
         lan_man_title = (pygame.transform.scale(lan_man_title, DEFAULT_IMAGE_SIZE))
         screen.blit(lan_man_title, (50, 100))
+        ingridbio = castfont.render("Good job", True, (0, 0, 0))
+        screen.blit(ingridbio, (100, 50))
+        # when the red x is pressed, end the game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 endPage = False
-        ingridbio = castfont.render("Good job", True, (0, 0, 0))
-        screen.blit(ingridbio, (100, 50))
+
+        #if play again is clicked, reset variables
         if playagain_for_end.draw() == True:
             print("start clicked")
-            score = 0
+            for player in FriendsList:
+                player.isAlive = True
+                player.setX(random.randint(0, 730))
+                player.setY(random.randint(25, 150))
             running = True
             endPage = False
         pygame.display.update()
-
+    #Uupdate the screen
     pygame.display.update()
