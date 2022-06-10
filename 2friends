@@ -1,9 +1,14 @@
+# This class keeps track of each person
+# It is where each persons indiviudla variables are stored, draws them,
+# moves them, responds to whatever key is pressed and collisions.
+
 import pygame
 import math
 
-
+#My initializer, imported the screen from the main in to avoid circular import error
 class Person:
     def __init__(self, screen, name, x, y, xRate, yRate, facingRight, imageSizeX, imageSizeY, imageName, isShooter):
+        #pretty self explanatory
         self.name = name
         self.screen = screen
         self.x = x
@@ -11,55 +16,65 @@ class Person:
         self.xRate = xRate
         self.yRate = yRate
         self.facingRight = facingRight
-
         self.imageSizeX = imageSizeX
         self.imageSizeY = imageSizeY
-
-        self.isShooter = isShooter
         self.isAlive = True
-
+        # only landry has variable isShooter
+        self.isShooter = isShooter
         self.imageWalkingRight = pygame.image.load(imageName)
         self.imageWalkingRight = (pygame.transform.scale(self.imageWalkingRight, (imageSizeX, imageSizeY)))
+        #for image walking left, mirrored right image.
         self.imageWalkingLeft = pygame.transform.flip(self.imageWalkingRight, True, False)
 
+    #for testing purpose. Wanted to see if variables were saved correctly
     def displayinfo(self):
         return '{} {} {} {} {} {}'.format(self.name, self.x, self.y, self.xRate, self.yRate,
                                           self.facingRight)
 
+    #checks to see it person has collided with bullet, returns a boolean
     def ifCollision(self, bulletX, bulletY):
-        distance = math.sqrt((math.pow(self.x - bulletX, 2)) + (math.pow(self.y - bulletY, 2)))
-        if distance < 70:
-            return True
-        else:
-            return False
+        return math.sqrt((math.pow(self.x - bulletX, 2)) + (math.pow(self.y - bulletY, 2))) < 50
 
-    def drawPerson(self, bulletX, bulletY):
+    #draws the person if they haven't cllided with bullet
+    def drawPerson(self, bulletfiring, bulletX, bulletY):
+
+        #if person is landry, always draw landry
         if self.isShooter:
             self.isAlive = True
+
+        #check to see if they collided iwth bullet
         else:
-            if self.ifCollision(bulletX, bulletY) == True:
+            if (bulletfiring == True and self.ifCollision(bulletX, bulletY) == True):
                 self.isAlive = False
 
+        #if noto colided with bullet, draw the person
         if self.isAlive:
+            #check if the person is facing right, draw left it facingRight variable is false
             if self.facingRight == True:
                 self.screen.blit(self.imageWalkingRight, (self.x, self.y))
             else:
                 self.screen.blit(self.imageWalkingLeft, (self.x, self.y))
 
+    #This keeps track of how much the person moves
     def movePerson(self):
         self.x += self.xRate
+        #if person is landry
         if self.isShooter == True:
+            #cant go past x=0, x=730
             if self.x <= 0:
                 self.x = 0
             elif self.x >= 730:
                 self.x = 730
             self.y += self.yRate
+            # cant go past y=350, y=770
             if self.y <= 350:
                 self.y = 350
             elif self.y >= 470:
                 self.y = 470
+        #if person is not landy AKA everyone else
         else:
-            self.x += self.xRate
+            #cant go past x=0, x=730,
+
             if self.x <= 0:
                 self.xRate = -self.xRate
                 self.facingRight = True
@@ -68,46 +83,56 @@ class Person:
                 self.xRate = -self.xRate
                 self.facingRight = False
                 self.y += self.yRate
+            # when y = 200, it will jumb back to y = 50
+            if self.y >= 200:
+                self.y = 50
 
-
-
+    #responds when a key is pressed
+    # WASD, only landry ises this
     def respondKeyDownEvent(self, event):
-        if self.isShooter == False:
-            return
-        else:
+        #checks if its landdry
+        if self.isShooter:
             # moving left and right
             if event.key == pygame.K_LEFT:
-                self.imageWalkingRight = False
-
+                self.facingRight = False
+                self.xRate = - 1.0
             if event.key == pygame.K_RIGHT:
-                self.imageWalkingRight = True
-            self.xRate = -self.xRate
+                self.facingRight = True
+                self.xRate = 1.0
 
             # moving up and down
             if event.key == pygame.K_UP:
-                self.yRate = - math.fabs(self.yRate)
+                self.yRate = - 1.0
             if event.key == pygame.K_DOWN:
-                self.yRate = math.fabs(self.yRate)
+                self.yRate = 1.0
 
-
+    #when key is not pressed anymore
     def respondKeyUpEvent(self, event):
-        if self.isShooter == False:
-            return
-        else:
-            # moving left and right
+        if self.isShooter:
+            # stop moving left and right
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 self.xRate = 0
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 self.yRate = 0
 
+#getter and setters
+
+    #gety
     def getY(self):
         return self.y
-
+    #getx
     def getX(self):
         return self.x
-
+    #setx
+    def setX(self, x):
+        self.x = x
+    #sety
+    def setY(self, y):
+        self.y = y
+    #getIsShooter
     def getIsShooter(self):
         return self.isShooter
 
+    #getIsFacingRight
     def getIsFacingRight(self):
         return self.facingRight
